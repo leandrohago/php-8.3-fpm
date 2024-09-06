@@ -16,6 +16,15 @@ RUN apt-get update && apt-get install -y \
     libpng-dev libpq-dev libzip-dev \
     libxml2-dev make nano nginx openssl sudo supervisor tzdata unzip vim wget procps
 
+RUN pecl channel-update pecl.php.net
+
+RUN docker-php-ext-install \
+    mysqli \
+    pdo \
+    pdo_mysql \
+    pdo_pgsql \
+    pgsql
+
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 RUN addgroup --gid ${GROUP_ID} ${UNAME} && \
